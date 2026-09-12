@@ -1,0 +1,36 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fa; color: #17202a; }
+body { min-height: 100vh; }
+.shell { max-width: 1200px; margin: 0 auto; padding: 34px 18px 50px; }
+header { margin-bottom: 24px; }
+h1 { margin: 0 0 7px; font-size: 30px; }
+header p { margin: 0; color: #65717d; }
+.searchBox { display: flex; gap: 10px; margin-bottom: 12px; }
+.searchBox input { flex: 1; min-width: 0; padding: 13px 15px; border: 1px solid #cbd3da; border-radius: 8px; font-size: 16px; background: white; outline: none; }
+.searchBox input:focus { border-color: #71808d; box-shadow: 0 0 0 2px rgba(100,120,140,.12); }
+.searchBox select { padding: 0 12px; border: 1px solid #cbd3da; border-radius: 8px; background: white; font-size: 15px; }
+.summary { color: #65717d; font-size: 14px; margin: 12px 0; }
+.tableWrap { background: white; border: 1px solid #dce2e7; border-radius: 10px; overflow: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 11px 13px; border-bottom: 1px solid #edf0f2; }
+th { background: #f8fafb; font-size: 13px; color: #53606b; position: sticky; top: 0; }
+td { font-size: 14px; }
+td:first-child { width: 100px; white-space: nowrap; }
+td:last-child { width: 220px; }
+a { color: #245f91; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.muted { color: #9aa3aa; font-style: italic; }
+.empty { text-align: center; padding: 35px; color: #68747e; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 18px 0; }
+button { padding: 9px 13px; border: 1px solid #cbd3da; border-radius: 7px; background: white; cursor: pointer; }
+button:hover:not(:disabled) { background: #f0f3f5; }
+button:disabled { opacity: .45; cursor: default; }
+footer { text-align: center; color: #8a949c; font-size: 13px; margin-top: 25px; }
+@media (max-width: 650px) {
+  .shell { padding: 24px 10px 35px; }
+  h1 { font-size: 24px; }
+  .searchBox { flex-direction: column; }
+  .searchBox select { height: 44px; }
+  th, td { padding: 9px 10px; }
+  td:last-child { width: auto; }
+}
