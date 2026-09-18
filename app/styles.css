@@ -1,36 +1,266 @@
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background: #f5f7fa; color: #17202a; }
-body { min-height: 100vh; }
-.shell { max-width: 1200px; margin: 0 auto; padding: 34px 18px 50px; }
-header { margin-bottom: 24px; }
-h1 { margin: 0 0 7px; font-size: 30px; }
-header p { margin: 0; color: #65717d; }
-.searchBox { display: flex; gap: 10px; margin-bottom: 12px; }
-.searchBox input { flex: 1; min-width: 0; padding: 13px 15px; border: 1px solid #cbd3da; border-radius: 8px; font-size: 16px; background: white; outline: none; }
-.searchBox input:focus { border-color: #71808d; box-shadow: 0 0 0 2px rgba(100,120,140,.12); }
-.searchBox select { padding: 0 12px; border: 1px solid #cbd3da; border-radius: 8px; background: white; font-size: 15px; }
-.summary { color: #65717d; font-size: 14px; margin: 12px 0; }
-.tableWrap { background: white; border: 1px solid #dce2e7; border-radius: 10px; overflow: auto; }
-table { width: 100%; border-collapse: collapse; }
-th, td { text-align: left; padding: 11px 13px; border-bottom: 1px solid #edf0f2; }
-th { background: #f8fafb; font-size: 13px; color: #53606b; position: sticky; top: 0; }
-td { font-size: 14px; }
-td:first-child { width: 100px; white-space: nowrap; }
-td:last-child { width: 220px; }
-a { color: #245f91; text-decoration: none; }
-a:hover { text-decoration: underline; }
-.muted { color: #9aa3aa; font-style: italic; }
-.empty { text-align: center; padding: 35px; color: #68747e; }
-.pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 18px 0; }
-button { padding: 9px 13px; border: 1px solid #cbd3da; border-radius: 7px; background: white; cursor: pointer; }
-button:hover:not(:disabled) { background: #f0f3f5; }
-button:disabled { opacity: .45; cursor: default; }
-footer { text-align: center; color: #8a949c; font-size: 13px; margin-top: 25px; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Quicksand, sans-serif;
+  background: #1F2937;
+  color: #F3F4F6;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 34px 18px 50px;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+h1 {
+  margin: 0 0 7px;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+header p {
+  margin: 0;
+  color: #E5E7EB;
+  font-weight: 400;
+}
+
+.searchBox {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  background: #1F2937;
+  border: 1px solid #374151;
+  border-radius: 10.5px;
+  padding: 10.5px;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+}
+
+.searchBox input {
+  flex: 1;
+  min-width: 0;
+  padding: 13px 15px;
+  border: 1px solid #374151;
+  border-radius: 7px;
+  font-family: Quicksand, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  background: #19212C;
+  color: #F3F4F6;
+  outline: none;
+}
+
+.searchBox input::placeholder {
+  color: #E5E7EB;
+  opacity: .7;
+}
+
+.searchBox input:focus {
+  border-color: #93C5FD;
+  box-shadow: 0 0 0 2px rgba(147,197,253,.14);
+}
+
+.searchBox select,
+.sortControl select {
+  padding: 0 12px;
+  border: 1px solid #374151;
+  border-radius: 7px;
+  background: #19212C;
+  color: #F3F4F6;
+  font-family: Quicksand, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.summary,
+.sortControl {
+  color: #E5E7EB;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.sortControl {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sortControl select {
+  padding: 7px 10px;
+}
+
+/* One continuous sheet */
+.tableWrap {
+  background: #19212C;
+  border: 1px solid #374151;
+  border-radius: 10.5px;
+  overflow: auto;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  padding: 0;
+}
+
+table {
+  width: 100%;
+  background: #19212C;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px 14px;
+}
+
+/* Stronger, clearer headers with a distinct divider below them */
+th {
+  background: #19212C;
+  color: #F3F4F6;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .015em;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 2px solid #4B5563;
+}
+
+/* Readability: slightly larger and less-light body text */
+td {
+  background: #19212C;
+  color: #F3F4F6;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+  border: 0;
+  border-bottom: 1px solid #374151;
+  border-radius: 0;
+}
+
+td:first-child {
+  width: 100px;
+  white-space: nowrap;
+}
+
+td:last-child {
+  width: 220px;
+}
+
+/* Intentionally no row hover effect. */
+
+a {
+  color: #93C5FD;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.muted {
+  color: #E5E7EB;
+  font-style: italic;
+  opacity: .7;
+}
+
+.empty {
+  text-align: center;
+  padding: 35px;
+  color: #E5E7EB;
+}
+
+.pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+  color: #E5E7EB;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+button {
+  padding: 9px 13px;
+  border: 1px solid #374151;
+  border-radius: 7px;
+  background: #19212C;
+  color: #F3F4F6;
+  font-family: Quicksand, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #1f2a36;
+  border-color: #93C5FD;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: default;
+}
+
+.pageJump {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pageJump input {
+  width: 72px;
+  padding: 8px;
+  border: 1px solid #374151;
+  border-radius: 7px;
+  background: #19212C;
+  color: #F3F4F6;
+  font-family: Quicksand, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  outline: none;
+}
+
+.pageJump input:focus {
+  border-color: #93C5FD;
+}
+
+footer {
+  text-align: center;
+  color: #E5E7EB;
+  opacity: .75;
+  font-size: 13px;
+  font-weight: 400;
+  margin-top: 25px;
+}
+
 @media (max-width: 650px) {
   .shell { padding: 24px 10px 35px; }
   h1 { font-size: 24px; }
-  .searchBox { flex-direction: column; }
+  .searchBox, .toolbar { flex-direction: column; align-items: stretch; }
   .searchBox select { height: 44px; }
-  th, td { padding: 9px 10px; }
+  .sortControl { justify-content: space-between; }
+  th, td { padding: 10px; }
   td:last-child { width: auto; }
 }

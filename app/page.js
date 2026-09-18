@@ -9,7 +9,9 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState("");
   const [field, setField] = useState("all");
+  const [sortOrder, setSortOrder] = useState("desc");
   const [page, setPage] = useState(1);
+  const [pageInput, setPageInput] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,9 +26,7 @@ export default function Home() {
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return posts;
-
-    return posts.filter((p) => {
+    const filtered = !q ? [...posts] : posts.filter((p) => {
       if (field === "id") return p.id.toLowerCase().includes(q);
       if (field === "title") return p.title.toLowerCase().includes(q);
       if (field === "username") return p.username.toLowerCase().includes(q);
@@ -38,9 +38,17 @@ export default function Home() {
         p.userId.toLowerCase().includes(q)
       );
     });
-  }, [posts, query, field]);
 
-  useEffect(() => setPage(1), [query, field]);
+    filtered.sort((a, b) => {
+      const aId = Number(a.id);
+      const bId = Number(b.id);
+      return sortOrder === "asc" ? aId - bId : bId - aId;
+    });
+
+    return filtered;
+  }, [posts, query, field, sortOrder]);
+
+  useEffect(() => setPage(1), [query, field, sortOrder]);
 
   const pageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   const safePage = Math.min(page, pageCount);
@@ -69,9 +77,18 @@ export default function Home() {
         </select>
       </section>
 
-      <div className="summary">
-        {loading ? "Loading database..." : `${results.length.toLocaleString()} matching posts`}
-        {!loading && query && ` for “${query}”`}
+      <div className="toolbar">
+        <div className="summary">
+          {loading ? "Loading database..." : `${results.length.toLocaleString()} matching posts`}
+          {!loading && query && ` for “${query}”`}
+        </div>
+        <label className="sortControl">
+          Sort by Post ID:
+          <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} aria-label="Sort by Post ID">
+            <option value="desc">Newest first</option>
+            <option value="asc">Oldest first</option>
+          </select>
+        </label>
       </div>
 
       <section className="tableWrap">
@@ -105,9 +122,38 @@ export default function Home() {
       </section>
 
       <nav className="pager" aria-label="Pagination">
+        <button disabled={safePage <= 1} onClick={() => setPage(1)}>First</button>
         <button disabled={safePage <= 1} onClick={() => setPage(safePage - 1)}>← Previous</button>
         <span>Page {safePage.toLocaleString()} of {pageCount.toLocaleString()}</span>
+        <div className="pageJump">
+          <input
+            type="number"
+            min="1"
+            max={pageCount}
+            value={pageInput}
+            onChange={(e) => setPageInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                const requested = Number.parseInt(pageInput, 10);
+                if (Number.isFinite(requested)) {
+                  setPage(Math.min(Math.max(requested, 1), pageCount));
+                  setPageInput("");
+                }
+              }
+            }}
+            placeholder="Page"
+            aria-label="Page number"
+          />
+          <button onClick={() => {
+            const requested = Number.parseInt(pageInput, 10);
+            if (Number.isFinite(requested)) {
+              setPage(Math.min(Math.max(requested, 1), pageCount));
+              setPageInput("");
+            }
+          }}>Go</button>
+        </div>
         <button disabled={safePage >= pageCount} onClick={() => setPage(safePage + 1)}>Next →</button>
+        <button disabled={safePage >= pageCount} onClick={() => setPage(pageCount)}>Last</button>
       </nav>
 
       <footer>
